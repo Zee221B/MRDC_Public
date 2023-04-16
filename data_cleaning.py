@@ -99,7 +99,55 @@ class DataCleaning:
          df3 = df3.reset_index(drop=True)
       
      
-         return df3 
+         #return df3 
      
-     #def convert_product_weights(self, df4):
+     def convert_product_weights(self, my_bucket):
+         
+         #Identify and remove null/gibberish values
+         my_bucket.dropna(inplace=True)
+         my_bucket = my_bucket.reset_index(drop=True)
+       
+     # Convert all weights to kg and represent as a float
+         my_bucket.loc[my_bucket['weight'] == 'ml', 'weight'] = my_bucket.loc[my_bucket['weight'] == 'ml', 'weight'] * 0.001
+         my_bucket.loc[my_bucket['weight'] == 'g', 'weight'] = my_bucket.loc[my_bucket['weight'] == 'g', 'weight'] * 0.001
+       
+          #removed all kg and g using  replace method and from every row using apply lambda
+         my_bucket['weight'] = my_bucket['weight'].apply(lambda a : a.replace("kg", " ").replace("g", " ").replace("ml", " ").replace("oz", " "). replace("x", "").replace("  ", "") ) 
+         print(my_bucket)
+        # my_bucket['weight'] = my_bucket['weight'].astype('float64')
+
+         return my_bucket
+     
+     def clean_products_data(self, my_bucket):
+         #Convert each object to correct datatypes
+         my_bucket['product_name'] = my_bucket['product_name'].astype('string')
+         my_bucket['product_price'] = my_bucket['product_price'].astype('float64')
+         my_bucket["date_added"] = pd.to_datetime(my_bucket["date_added"], infer_datetime_format=True, errors='coerce') 
+         my_bucket['category'] = my_bucket['category'].astype('category')
+        # my_bucket['weight'] = my_bucket['weight'].astype('float64') 
+         my_bucket['EAN'] = my_bucket['EAN'].astype('string')
+         my_bucket['removed'] = my_bucket['removed'].astype('category')
+         my_bucket['product_code'] = my_bucket['product_code'].astype('string')
+         my_bucket['uuid'] = my_bucket['uuid'].astype('string')
+
+        #identify any dupilicate values
+         my_bucket.duplicated().sum()
+         my_bucket.duplicated(keep='first')
+
+        #remove £ symbol from product_price column
+         my_bucket['product_price'] = my_bucket['product_price'].apply(lambda a : a.replace("£", " "))
+         print(my_bucket)
+          #remove gibberish rows
+
+         my_bucket = my_bucket.drop([1130])
+         my_bucket = my_bucket.drop([750])
+         my_bucket = my_bucket.drop([1397])
+
+         return my_bucket
+
+         
+
+         
+
+
          
