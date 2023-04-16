@@ -49,7 +49,7 @@ store_endpoint = "https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/st
 num_stores_endpoint = "https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores"
 header = {'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'}
 stores_df = data_extractor.retrieves_store_data(num_stores_endpoint, store_endpoint, header)
-s3_address = "s3://data-handling-public/products.csv"
+s3_address = "s3://data-handling-public/products.csv" 
 
 
 user_df = data_extractor.read_rds_table(database_connector, table_names[1])
