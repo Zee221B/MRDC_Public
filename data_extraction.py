@@ -5,10 +5,9 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import requests
 import boto3
+import json
 
-pdf_path = "https://data-handling-public.s3.eu-west-1.amazonaws.com/card_details.pdf"
 
-s3_address = "s3://data-handling-public/products.csv"
 
 class DataExtractor(Resource):
     
@@ -20,6 +19,8 @@ class DataExtractor(Resource):
         engine = database_connector.init_db_engine('db_creds.yml')
         df = self.extract_data(engine, table_name)
         return df
+
+    
     def retrieve_pdf_data(self, database_connector, pdf_path):
         df2 = tabula.read_pdf(pdf_path, pages='all')
         df2 = pd.concat(tabula.read_pdf(pdf_path, pages='all'), ignore_index=True)
@@ -77,19 +78,18 @@ class DataExtractor(Resource):
         
         return my_bucket
         
-   
+    def extract_from_json(self, json_file):
+        # Opening JSON file
+        json_file = open('https://data-handling-public.s3.eu-west-1.amazonaws.com/date_details.json')
+        
+        # returns JSON object as
+        # a dictionary
+        data = json.load(json_file)
+        
+        return data
 
 
-                
-if __name__ == "__main__":
-    db_ex = DataExtractor()
-    print(db_ex.list_number_of_stores("https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores", {'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'} ))
-    df3 = db_ex.retrieves_store_data("https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores", "https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details" , {'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'})
-    print(df3)
 
-data_extractor = DataExtractor()
-my_bucket = data_extractor.extract_from_s3('s3://data-handling-public/products.csv')
-print(my_bucket)
 
 
 

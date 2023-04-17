@@ -17,12 +17,12 @@ class DataCleaning:
         user_data['country_code'] = user_data['country_code'].astype('category')
         user_data['phone_number'] = user_data['phone_number'].astype('string')
         user_data['user_uuid'] = user_data['user_uuid'].astype('string')
-        print("*" * 40)
-        user_data.info()
+       
+        
 
         #Identify and remove null/gibberish values
-        print("*" * 40)
-        user_data.info()
+       
+        
         my_country_code = ["GB", "DE", "US"]
         user_data[user_data.country_code.isin(my_country_code)].set_index('country_code')
         my_countries = ["United Kingdom", "United States", "Germany"]
@@ -43,7 +43,7 @@ class DataCleaning:
          pdf_path = "https://data-handling-public.s3.eu-west-1.amazonaws.com/card_details.pdf"
        
          # Convert each object to correct datatypes
-         df2.info()
+        
          df2['card_number'] = df2['card_number'].astype('string')
          df2["expiry_date"] = pd.to_datetime(df2["expiry_date"], infer_datetime_format=True, errors='coerce') 
          df2["date_payment_confirmed"] = pd.to_datetime(df2["date_payment_confirmed"], infer_datetime_format=True, errors='coerce')
@@ -99,7 +99,7 @@ class DataCleaning:
          df3 = df3.reset_index(drop=True)
       
      
-         #return df3 
+         return df3 
      
      def convert_product_weights(self, my_bucket):
          
@@ -113,7 +113,7 @@ class DataCleaning:
        
           #removed all kg and g using  replace method and from every row using apply lambda
          my_bucket['weight'] = my_bucket['weight'].apply(lambda a : a.replace("kg", " ").replace("g", " ").replace("ml", " ").replace("oz", " "). replace("x", "").replace("  ", "") ) 
-         print(my_bucket)
+       
         # my_bucket['weight'] = my_bucket['weight'].astype('float64')
 
          return my_bucket
@@ -136,7 +136,7 @@ class DataCleaning:
 
         #remove £ symbol from product_price column
          my_bucket['product_price'] = my_bucket['product_price'].apply(lambda a : a.replace("£", " "))
-         print(my_bucket)
+        
           #remove gibberish rows
 
          my_bucket = my_bucket.drop([1130])
@@ -145,8 +145,16 @@ class DataCleaning:
 
          return my_bucket
 
-         
 
+     def clean_orders_data(self, order_table):
+         order_table = order_table.drop('first_name', axis=1)
+         order_table = order_table.drop('last_name', axis=1)
+         order_table = order_table.drop('1', axis=1)
+         
+         return order_table
+    
+
+     #def clean_json_file(self,link):
          
 
 
