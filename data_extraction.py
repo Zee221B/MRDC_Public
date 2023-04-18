@@ -78,16 +78,26 @@ class DataExtractor(Resource):
         
         return my_bucket
         
-    def extract_from_json(self, json_file):
-        # Opening JSON file
-        json_file = open('https://data-handling-public.s3.eu-west-1.amazonaws.com/date_details.json')
+    def extract_from_s3_2(self, s3_address_2):
+        """Extracts data from an S3 bucket and returns a pandas DataFrame."""
         
-        # returns JSON object as
-        # a dictionary
-        data = json.load(json_file)
+        # Split the S3 address into its components
+        bucket, key = s3_address_2.replace('s3://', '').split('/', 1)
         
-        return data
+        # Create a client for accessing the S3 bucket and 
+        # informing boto3 that we intend to use an S3 bucket
 
+        s3 = boto3.client('s3')
+        
+        # Download the file from S3
+        response = s3.get_object(Bucket=bucket, Key=key)
+        body = response['Body']
+        
+        # Read the contents of the file into a pandas DataFrame
+        my_bucket_2 = pd.read_json(body)
+        
+        return my_bucket_2
+       
 
 
 

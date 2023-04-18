@@ -150,12 +150,38 @@ class DataCleaning:
          order_table = order_table.drop('first_name', axis=1)
          order_table = order_table.drop('last_name', axis=1)
          order_table = order_table.drop('1', axis=1)
+
+         
+
          
          return order_table
     
+     
+     def clean_date_events_data_2(self, my_bucket_2):
+        #Find duplicates 
+        my_bucket_2.duplicated().sum()
+        my_bucket_2.duplicated(keep='first')
 
-     #def clean_json_file(self,link):
-         
+        #Find null values 
+        my_bucket_2.dropna(inplace=True)
+        my_bucket_2 = my_bucket_2.reset_index(drop=True)
+        
+        # convert to correct datatypes - DONE
+
+        my_bucket_2['date_uuid'] = my_bucket_2['date_uuid'].astype('string')
+        my_bucket_2['time_period'] = my_bucket_2['time_period'].astype('category')
+        my_bucket_2["day"] = pd.to_datetime(my_bucket_2["day"],  errors='coerce')
+        my_bucket_2["year"] = pd.to_datetime(my_bucket_2["year"], errors='coerce')
+        my_bucket_2["month"] = pd.to_datetime(my_bucket_2["month"],  errors='coerce')
+        my_bucket_2["timestamp"] = pd.to_datetime(my_bucket_2["timestamp"], errors='coerce')
+
+        #Remvove gibberish values
+        my_time_period =  ["Morning", "Evening", "Midday", "Late_Hours"]
+        my_bucket_2[my_bucket_2.time_period.isin(my_time_period)].set_index('time_period')
+       
+        return my_bucket_2
+   
+
 
 
          
