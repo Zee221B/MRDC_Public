@@ -3,7 +3,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
 from data_extraction import DataExtractor
-from data_clean import DataCleaning
+from data_cleaning import DataCleaning
 
 
 
@@ -28,11 +28,14 @@ class DatabaseConnector:
    
   
     
-    def upload_to_db(self, my_bucket_2, dim_date_times):
-        my_bucket_2.to_sql(dim_date_times, self.upload_engine, if_exists='replace', index=False)
+    def upload_to_db(self, my_bucket, dim_products
+                     ):
+        my_bucket.to_sql(dim_products, self.upload_engine, if_exists='replace', index=False)
+        #df3.to_sql(dim_store_details, self.upload_engine, if_exists='replace', index=False)
+        #my_bucket_2.to_sql(dim_date_times, self.upload_engine, if_exists='replace', index=False)
         #order_table.to_sql(orders_table, self.upload_engine, if_exists='replace', index=False)
-    #     # df.to_sql(table_name, self.upload_engine, if_exists='replace', index=False)
-    #     # df2.to_sql(dim_card_details, self.upload_engine, if_exists='replace', index=False)
-    #     # df3.to_sql(dim_store_details, self.upload_engine, if_exists='replace', index=False)
-    #     # my_bucket.to_sql(dim_products, self.upload_engine, if_exists='replace', index=False)
+       # df.to_sql(table_name, self.upload_engine, if_exists='replace', index=False)
+     # df2.to_sql(dim_card_details, self.upload_engine, if_exists='replace', index=False)
+   
+    
 

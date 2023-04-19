@@ -97,8 +97,8 @@ class DataCleaning:
          df3.drop('lat', axis=1, inplace=True)
          df3.dropna(inplace=True)
          df3 = df3.reset_index(drop=True)
-      
-     
+
+    
          return df3 
      
      def convert_product_weights(self, my_bucket):
@@ -139,9 +139,14 @@ class DataCleaning:
         
           #remove gibberish rows
 
-         my_bucket = my_bucket.drop([1130])
-         my_bucket = my_bucket.drop([750])
-         my_bucket = my_bucket.drop([1397])
+        
+         my_bucket = my_bucket.drop([751])
+         my_bucket = my_bucket.drop([788])
+         my_bucket = my_bucket.drop([794])
+         my_bucket = my_bucket.drop([1133])
+         my_bucket = my_bucket.drop([1401])
+         my_bucket = my_bucket.drop([1400])
+         my_bucket = my_bucket.drop([266])
 
          return my_bucket
 
@@ -151,9 +156,6 @@ class DataCleaning:
          order_table = order_table.drop('last_name', axis=1)
          order_table = order_table.drop('1', axis=1)
 
-         
-
-         
          return order_table
     
      
