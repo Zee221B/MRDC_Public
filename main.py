@@ -1,5 +1,5 @@
 from data_extraction import DataExtractor
-from data_cleaning import DataCleaning
+from data_clean import DataCleaning
 from database_utils import DatabaseConnector
 
 database_connector = DatabaseConnector()
