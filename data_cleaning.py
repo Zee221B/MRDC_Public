@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 class DataCleaning:
      @staticmethod
@@ -43,21 +44,29 @@ class DataCleaning:
          pdf_path = "https://data-handling-public.s3.eu-west-1.amazonaws.com/card_details.pdf"
        
          # Convert each object to correct datatypes
-        
-         df2['card_number'] = df2['card_number'].astype('string')
-         df2["expiry_date"] = pd.to_datetime(df2["expiry_date"], infer_datetime_format=True, errors='coerce') 
-         df2["date_payment_confirmed"] = pd.to_datetime(df2["date_payment_confirmed"], infer_datetime_format=True, errors='coerce')
-         df2['card_provider'] = df2['card_provider'].astype('category')
-        
-
-         # Identify any duplicate values
+         unique_values = df2['card_provider'].unique().tolist()
+         values_to_remove = unique_values[-14:]
+         df2.drop(df2[df2['card_provider'].isin(values_to_remove)].index, inplace=True)
          df2.duplicated().sum()
          df2.duplicated(keep='first')
-
-         #Identify and remove null/gibberish values
          my_card_provider = ["VISA 16 digit", "JCB 16 digit", "VISA 13 digit", "VISA 19 digit", "JCB 15 digit", "Diners Club / Carte Blanche", "American Express", "Maestro", "Discover", "Mastercard"]
          df2[df2.card_provider.isin(my_card_provider)].set_index('card_provider')
+         df2.replace('NULL', np.nan, inplace=True)
          df2.dropna(inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == 'December 2021 17'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == 'December 2000 01'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == '2008 May 11'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == 'May 1998 09'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == '2005 July 01'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == 'September 2016 04'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == 'October 2000 04'].index, inplace=True)
+         df2.drop(df2[df2['date_payment_confirmed'] == '2017/05/15'].index, inplace=True)
+
+
+         df2["expiry_date"] = pd.to_datetime(df2["expiry_date"], format='%m/%y') 
+         df2["date_payment_confirmed"] = pd.to_datetime(df2["date_payment_confirmed"])
+         df2['card_provider'] = df2['card_provider'].astype('category')
+         df2['card_number'] = df2['card_number'].astype('string')
          df2 = df2.reset_index(drop=True)
          
          return df2 

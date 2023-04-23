@@ -15,6 +15,7 @@ class DataExtractor(Resource):
         query = f"SELECT * FROM {table_name}"
         df = pd.read_sql(query, engine)
         return df
+        
     def read_rds_table(self, database_connector, table_name):
         engine = database_connector.init_db_engine('db_creds.yml')
         df = self.extract_data(engine, table_name)
