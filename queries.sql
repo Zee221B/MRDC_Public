@@ -1,3 +1,4 @@
+--Milestone 3
 --Task 1
 
 ALTER TABLE orders_table 
@@ -130,3 +131,20 @@ WHERE card_number NOT IN (SELECT card_number FROM dim_card_details);
 ALTER TABLE orders_table
 ADD CONSTRAINT fk_card_number_orders
 FOREIGN KEY (card_number) REFERENCES dim_card_details(card_number);
+
+
+--Milestone 4
+
+--Task 1
+SELECT country_code, COUNT(*) as total_no_stores
+FROM dim_store_details
+GROUP BY country_code
+ORDER BY total_no_stores DESC;
+
+--Task 2
+SELECT locality, COUNT(*) AS total_no_stores
+FROM dim_store_details
+GROUP BY locality
+ORDER BY total_no_stores DESC
+
+--Task 3
