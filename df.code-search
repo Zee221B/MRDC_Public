@@ -1,7 +1,0 @@
-# Query: df
-
-8 results - 1 file
-
-cli.ipynb:
-  280:     "df.loc[df['weight_unit'] == 'ml', 'weight'] = df.loc[df['weight_unit'] == 'ml', 'weight'] * 0.001\n",
-  281:     "df.loc[df['weight_unit'] == 'g', 'weight'] = df.loc[df['weight_unit'] == 'g', 'weight'] * 0.001"
