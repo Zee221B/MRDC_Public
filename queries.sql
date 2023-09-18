@@ -186,5 +186,18 @@ FROM
 GROUP BY
     store_type;
 
+--Task 6
+SELECT
+    SUM(orders_table.product_quantity * dim_products.product_price) AS total_sales,
+    EXTRACT(YEAR FROM order_date) AS year,
+    EXTRACT(MONTH FROM order_date) AS month
+FROM
+    dim_date_times
+GROUP BY
+    year,
+    month
+ORDER BY
+    total_sales DESC
+LIMIT 10;
     
 
