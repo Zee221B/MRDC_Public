@@ -223,3 +223,29 @@ GROUP BY
     country_code
 ORDER BY
     total_sales DESC;
+
+--Task 9
+
+    SELECT
+    EXTRACT(YEAR FROM sale_timestamp) AS year,
+    jsonb_build_object(
+        'hours', AVG(hours)::integer,
+        'minutes', AVG(minutes)::integer,
+        'seconds', AVG(seconds)::integer,
+        'milliseconds', AVG(milliseconds)::integer
+    ) AS actual_time_taken
+FROM (
+    SELECT
+        sale_timestamp,
+        EXTRACT(EPOCH FROM (LEAD(sale_timestamp) OVER (ORDER BY sale_timestamp) - sale_timestamp)) / 3600 AS hours,
+        (EXTRACT(EPOCH FROM (LEAD(sale_timestamp) OVER (ORDER BY sale_timestamp) - sale_timestamp)) % 3600) / 60 AS minutes,
+        EXTRACT(EPOCH FROM (LEAD(sale_timestamp) OVER (ORDER BY sale_timestamp) - sale_timestamp)) % 60 AS seconds,
+        EXTRACT(MILLISECONDS FROM (LEAD(sale_timestamp) OVER (ORDER BY sale_timestamp) - sale_timestamp)) AS milliseconds
+    FROM
+        dim_orders_table
+) AS time_data
+GROUP BY
+    year
+ORDER BY
+    year;
+
