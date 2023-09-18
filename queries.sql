@@ -199,5 +199,14 @@ GROUP BY
 ORDER BY
     total_sales DESC
 LIMIT 10;
+
+--Task 7
+SELECT
+    SUM(staff_numbers) AS total_staff_numbers,
+    country_code
+FROM
+    dim_store_details
+GROUP BY
+    country_code;
     
 
