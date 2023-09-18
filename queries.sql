@@ -176,5 +176,15 @@ FROM dim_store_details
 WHERE
    location = 'Local'
 
+--Task 5
+SELECT 
+    store_type,
+     SUM(orders_table.product_quantity * dim_products.product_price) AS total_sales,
+    (SUM(total_sales) / (SELECT SUM(total_sales) FROM sales)) * 100 AS percentage_total
+FROM
+    dim_store_details
+GROUP BY
+    store_type;
+
     
 
