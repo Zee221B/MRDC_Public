@@ -148,3 +148,33 @@ GROUP BY locality
 ORDER BY total_no_stores DESC
 
 --Task 3
+-- Check date times table with months present
+--upload the table again
+--create foreign key
+--run the query
+
+SELECT dim_date_times.month, 
+SUM(orders_table.product_quantity * dim_products.product_price) AS total_sales
+FROM dim_date_times
+JOIN orders_table ON dim_date_times.date_uuid  = orders_table.date_uuid
+JOIN dim_products ON orders_table.product_code  = dim_products.product_code
+GROUP BY dim_date_times.month
+ORDER BY total_sales DESC;
+
+--Task 4
+SELECT dim_store_details.locality
+SUM(orders_table.product_quantity) AS product_quantity_count
+SUM(orders_table.product_quantity * dim_products.product_price) AS total_sales
+FROM dim_store_details
+WHERE
+   location = 'Web Portal'
+   
+SELECT dim_store_details.locality
+SUM(orders_table.product_quantity) AS product_quantity_count
+SUM(orders_table.product_quantity * dim_products.product_price) AS total_sales
+FROM dim_store_details
+WHERE
+   location = 'Local'
+
+    
+
