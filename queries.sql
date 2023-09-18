@@ -208,5 +208,18 @@ FROM
     dim_store_details
 GROUP BY
     country_code;
-    
 
+--Task 8
+SELECT
+    SUM(orders_table.product_quantity * dim_products.product_price) AS total_sales,
+    store_type,
+    country_code
+FROM
+    dim_store_details
+WHERE
+    country_code = 'DE'  -- Filter for Germany
+GROUP BY
+    store_type,
+    country_code
+ORDER BY
+    total_sales DESC;
