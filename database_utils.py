@@ -26,7 +26,7 @@ class DatabaseConnector:
         inspector = inspect(engine)
         return inspector.get_table_names()
 
-    def upload_to_db(self, df2, dim_card_details):
+    def upload_to_db(self):
         my_df_2.to_sql(dim_products, self.upload_engine, if_exists='replace', index=False)
         store_data.to_sql(dim_store_details, self.upload_engine, if_exists='replace', index=False)
         my_df.to_sql(dim_date_times, self.upload_engine, if_exists='replace', index=False)

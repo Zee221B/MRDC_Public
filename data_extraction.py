@@ -1,11 +1,12 @@
-import pandas as pd
-import tabula
 from tabula import read_pdf 
-from flask import Flask
 from flask_restful import Resource, Api, reqparse
-import requests
 import boto3
 import json
+import pandas as pd
+import requests
+import tabula
+
+
 
 
 

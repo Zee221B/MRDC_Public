@@ -1,5 +1,0 @@
-RDS_HOST: localhost
-RDS_PASSWORD: FeelingAMoment1!
-RDS_USER: postgres
-RDS_DATABASE: Sales_Data
-RDS_PORT: 5432
