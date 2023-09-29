@@ -130,3 +130,14 @@ dmypy.json
 
 db_creds.yml
 db_creds2.yml
+
+*.txt
+*.ipynb
+*.pdf
+data_extraction_private.py
+data_cleaning_private.py 
+database_utils_private.py
+df.ipynb 
+df2.ipynb
+df2(2).ipynb
+df3.ipynb
