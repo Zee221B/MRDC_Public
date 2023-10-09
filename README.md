@@ -31,6 +31,10 @@ In this project, I use GitHub to track changes to my code and save them online i
 
 ## Extracting and cleaning the data from the data sources
 
+![Alt text](image-1.png)
+
+
+
 ### Setting up a new database to store the data
 
 In this step, I initialise a new database locally to store the extracted data.I then Set up a new database within pgadmin4 and name it sales_data.
@@ -48,6 +52,8 @@ Finally, I created a script named data_cleaning.py this script will contain a cl
 
 
 ### Extracting and cleaning the user data
+
+![Alt text](image.png)
 
 The historical data of users is currently stored in an AWS database in the cloud.
 I created methods in my DataExtractor and DatabaseConnector class which help extract the information from an AWS RDS database.
